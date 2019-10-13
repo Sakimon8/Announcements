@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<String> arraySubject=new ArrayList<String>();
     public static ArrayList<String> arrayContent=new ArrayList<String>();
     public static int choice;
-    Intent ser;
+    Intent serup;
     static FragmentManager manager;
 
     @Override
@@ -34,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
             arraySubject = savedInstanceState.getStringArrayList("subs");
             arrayContent=savedInstanceState.getStringArrayList("cont");
         }
-        ser= new Intent(this,updatedb.class);
-        startService(ser);
+        serup= new Intent(this,updatedb.class);
+        startService(serup);
+        if(addAnnouncement.seradd!=null)
+        startService(addAnnouncement.seradd);
     }
 
     @Override
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(ser);
+        stopService(serup);
+        stopService(addAnnouncement.seradd);
     }
 }

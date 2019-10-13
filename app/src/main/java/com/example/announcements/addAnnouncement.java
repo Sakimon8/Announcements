@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class addAnnouncement extends AppCompatActivity {
 DatabaseReference reff;
 Announcements newAnn;
-static Intent ser;
+static Intent seradd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,15 +28,9 @@ static Intent ser;
         EditText e2=findViewById(R.id.editText4);
         String sub=e1.getText().toString();
         String con=e2.getText().toString();
-//        reff= FirebaseDatabase.getInstance().getReference().child("Announcements");
-//        newAnn=new Announcements();
-//        newAnn.setContent(con);
-//        newAnn.setSubject(sub);
-        Intent ser=new Intent(this,addtodb.class);
-        ser.putExtra("sub",sub);
-        ser.putExtra("con",con);
-        startService(ser);
-        //reff.push().setValue(newAnn);
+        seradd=new Intent(this,addtodb.class);
+        seradd.putExtra("sub",sub);
+        seradd.putExtra("con",con);
         startActivity(addAnn);
     }
 }
