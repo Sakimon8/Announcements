@@ -7,14 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,19 +16,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    DatabaseReference reff;
+    DatabaseReference ref;
     public static ArrayList<String> arraySubject=new ArrayList<String>();
     public static ArrayList<String> arrayContent=new ArrayList<String>();
     public static int choice;
     Intent ser;
+    static FragmentManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        manager = getSupportFragmentManager();
         if(savedInstanceState!=null) {
             arraySubject = savedInstanceState.getStringArrayList("subs");
             arrayContent=savedInstanceState.getStringArrayList("cont");
@@ -54,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        reff = FirebaseDatabase.getInstance().getReference().child("Announcements");
-        reff.addValueEventListener(new ValueEventListener() {
+        ref = FirebaseDatabase.getInstance().getReference().child("Announcements");
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot AnnSnapshot : dataSnapshot.getChildren()) {
@@ -77,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
         Intent lgn=new Intent(MainActivity.this,login.class);
         startActivity(lgn);
     }
-    public static void changedata()
+    public static void changeData()
     {
-       // FragmentTransaction th = getSupportFragmentManager().beginTransaction();
-       // th.replace(R.id.fragSubject, new subject(), "Subject");
-       // th.commit();
+        FragmentTransaction th = manager.beginTransaction();
+        th.replace(R.id.fragSubject, new subject(), "Subject");
+        th.commit();
     }
 
     @Override

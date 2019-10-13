@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,8 +24,8 @@ public class updatedb extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("Announcements");
-        reff.addValueEventListener(new ValueEventListener() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Announcements");
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot AnnSnapshot : dataSnapshot.getChildren()) {
@@ -34,7 +33,7 @@ public class updatedb extends Service {
                     MainActivity.arrayContent.add(a.content);
                     MainActivity.arraySubject.add(a.subject);
                 }
-                MainActivity.changedata();
+                MainActivity.changeData();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
