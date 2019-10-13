@@ -16,13 +16,21 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+    DatabaseReference reff;
     public static ArrayList<String> arraySubject=new ArrayList<String>();
     public static ArrayList<String> arrayContent=new ArrayList<String>();
     public static int choice;
+    Intent ser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +40,9 @@ public class MainActivity extends AppCompatActivity {
             arraySubject = savedInstanceState.getStringArrayList("subs");
             arrayContent=savedInstanceState.getStringArrayList("cont");
         }
-        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        t.add(R.id.fragSubject,new subject(),"Subject");
-        t.commit();
-
-   }
+        ser= new Intent(this,updatedb.class);
+        startService(ser);
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -48,22 +54,39 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //Toast.makeText(getApplicationContext(),"Hi",Toast.LENGTH_SHORT).show();
-        Bundle b = getIntent().getExtras();
-            if(b!=null)
-            {
-                String sub = b.getString("subject");
-                String cont=b.getString("content");
-                arraySubject.add(sub);
-                arrayContent.add(cont);
-
+        reff = FirebaseDatabase.getInstance().getReference().child("Announcements");
+        reff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot AnnSnapshot : dataSnapshot.getChildren()) {
+                    Announcements a = AnnSnapshot.getValue(Announcements.class);
+                    arrayContent.add(a.content);
+                    arraySubject.add(a.subject);
+                }
+                FragmentTransaction th = getSupportFragmentManager().beginTransaction();
+                th.replace(R.id.fragSubject, new subject(), "Subject");
+                th.commit();
             }
-        //adapter.notifyDataSetChanged();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
     public void checkLogin(View v)
     {
         Intent lgn=new Intent(MainActivity.this,login.class);
         startActivity(lgn);
     }
+    public static void changedata()
+    {
+        FragmentTransaction th = getSupportFragmentManager().beginTransaction();
+        th.replace(R.id.fragSubject, new subject(), "Subject");
+        th.commit();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(ser);
+    }
 }

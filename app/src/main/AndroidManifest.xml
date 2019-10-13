@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".addAnnouncement"></activity>
-        <activity android:name=".addannounce" />
         <activity android:name=".login" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -19,6 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".updatedb"
+            android:exported="false"></service>
     </application>
 
 </manifest>

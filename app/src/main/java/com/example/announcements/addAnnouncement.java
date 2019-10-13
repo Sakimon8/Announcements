@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class addAnnouncement extends AppCompatActivity {
-
+DatabaseReference reff;
+Announcements newAnn;
+static Intent ser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +30,13 @@ public class addAnnouncement extends AppCompatActivity {
         String con=e2.getText().toString();
         addAnn.putExtra("subject",sub);
         addAnn.putExtra("content",con);
+        reff= FirebaseDatabase.getInstance().getReference().child("Announcements");
+        newAnn=new Announcements();
+        newAnn.setContent(con);
+        newAnn.setSubject(sub);
+        reff.push().setValue(newAnn);
+        ser=new Intent(this,updatedb.class);
+        startService(ser);
         startActivity(addAnn);
     }
 }
