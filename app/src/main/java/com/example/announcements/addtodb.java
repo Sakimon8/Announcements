@@ -3,6 +3,7 @@ package com.example.announcements;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -15,8 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class updatedb extends Service {
-
+public class addtodb extends Service {
+    String con,sub;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,7 +26,10 @@ public class updatedb extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        new MyAsyncTask().execute();
+        new addtodb.MyAsyncTask().execute();
+        Bundle b=intent.getExtras();
+        con=b.getString("con");
+        sub=b.getString("sub");
         return START_STICKY;
     }
 
@@ -51,24 +55,10 @@ public class updatedb extends Service {
         @Override // Perform our Long Running Task
         protected Void doInBackground(Integer... params) {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Announcements");
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    MainActivity.arraySubject.clear();
-                    MainActivity.arrayContent.clear();
-                    for (DataSnapshot AnnSnapshot : dataSnapshot.getChildren()) {
-                        Announcements a = AnnSnapshot.getValue(Announcements.class);
-                        MainActivity.arrayContent.add(a.content);
-                        MainActivity.arraySubject.add(a.subject);
-                    }
-                    MainActivity.changeData();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(updatedb.this, "Database Connection Error", Toast.LENGTH_SHORT).show();
-                }
-            });
+            Announcements newAnn=new Announcements();
+            newAnn.setContent(con);
+            newAnn.setSubject(sub);
+            ref.push().setValue(newAnn);
             return null;
         }
 

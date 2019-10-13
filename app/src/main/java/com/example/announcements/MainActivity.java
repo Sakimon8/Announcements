@@ -48,23 +48,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        ref = FirebaseDatabase.getInstance().getReference().child("Announcements");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot AnnSnapshot : dataSnapshot.getChildren()) {
-                    Announcements a = AnnSnapshot.getValue(Announcements.class);
-                    arrayContent.add(a.content);
-                    arraySubject.add(a.subject);
-                }
-                FragmentTransaction th = getSupportFragmentManager().beginTransaction();
-                th.replace(R.id.fragSubject, new subject(), "Subject");
-                th.commit();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
     }
     public void checkLogin(View v)
     {

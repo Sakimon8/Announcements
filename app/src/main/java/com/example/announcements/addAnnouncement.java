@@ -28,15 +28,15 @@ static Intent ser;
         EditText e2=findViewById(R.id.editText4);
         String sub=e1.getText().toString();
         String con=e2.getText().toString();
-        addAnn.putExtra("subject",sub);
-        addAnn.putExtra("content",con);
-        reff= FirebaseDatabase.getInstance().getReference().child("Announcements");
-        newAnn=new Announcements();
-        newAnn.setContent(con);
-        newAnn.setSubject(sub);
-        reff.push().setValue(newAnn);
-        ser=new Intent(this,updatedb.class);
+//        reff= FirebaseDatabase.getInstance().getReference().child("Announcements");
+//        newAnn=new Announcements();
+//        newAnn.setContent(con);
+//        newAnn.setSubject(sub);
+        Intent ser=new Intent(this,addtodb.class);
+        ser.putExtra("sub",sub);
+        ser.putExtra("con",con);
         startService(ser);
+        //reff.push().setValue(newAnn);
         startActivity(addAnn);
     }
 }
