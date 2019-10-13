@@ -28,8 +28,7 @@ public class subject extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_subject, container, false);
         lv= view.findViewById(R.id.listsubs);
-        adapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, MainActivity.arraySubject);
-        lv.setAdapter(adapter);
+        adapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, MainActivity.arraySubject);lv.setAdapter(adapter);
         lv.setDividerHeight(20);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

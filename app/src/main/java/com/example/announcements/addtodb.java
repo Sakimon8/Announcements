@@ -26,10 +26,10 @@ public class addtodb extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        new addtodb.MyAsyncTask().execute();
         Bundle b=intent.getExtras();
         con=b.getString("con");
         sub=b.getString("sub");
+        new addtodb.MyAsyncTask().execute();
         return START_STICKY;
     }
 
