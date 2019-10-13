@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
     }
     public static void changedata()
     {
-        FragmentTransaction th = getSupportFragmentManager().beginTransaction();
-        th.replace(R.id.fragSubject, new subject(), "Subject");
-        th.commit();
+       // FragmentTransaction th = getSupportFragmentManager().beginTransaction();
+       // th.replace(R.id.fragSubject, new subject(), "Subject");
+       // th.commit();
     }
 
     @Override
