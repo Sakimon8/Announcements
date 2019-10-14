@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseReference ref;
-    public static ArrayList<String> arraySubject=new ArrayList<String>();
-    public static ArrayList<String> arrayContent=new ArrayList<String>();
+    public static ArrayList<String> arraySubject=new ArrayList<>();
+    public static ArrayList<String> arrayContent=new ArrayList<>();
     public static int choice;
     Intent serup;
     static FragmentManager manager;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         serup= new Intent(this,updatedb.class);
         startService(serup);
         if(addAnnouncement.seradd!=null)
-        //startService(addAnnouncement.seradd);
+        startService(addAnnouncement.seradd);
     }
 
     @Override
