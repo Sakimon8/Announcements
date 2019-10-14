@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         serup= new Intent(this,updatedb.class);
         startService(serup);
         if(addAnnouncement.seradd!=null)
-        startService(addAnnouncement.seradd);
+        //startService(addAnnouncement.seradd);
     }
 
     @Override
